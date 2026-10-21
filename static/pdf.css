@@ -1,0 +1,24 @@
+.pdf-source-link { font-size: 11px; margin: 8px 0; display: inline-block; }
+.catalog-notes { padding: 0 18px 18px; color: #84917c; font-size: 11px; line-height: 1.8; }
+.pdf-pages { display: grid; gap: 14px; padding: 0 18px 18px; }
+.pdf-page { padding: 19px; border: 1px solid #e2e9df; border-radius: 9px; background: #fcfdfb; }
+.pdf-page-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 13px; font-size: 12px; }
+.pdf-page-heading a { font-size: 11px; white-space: nowrap; }
+.pdf-page-text { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 250px; overflow: auto; color: #65735d; font-size: 11px; line-height: 1.85; }
+.pdf-page-empty { color: #929b89; font-size: 11px; line-height: 1.8; }
+.pdf-upload-summary { display: flex; gap: 20px; flex-wrap: wrap; margin: 17px 0; font-size: 12px; color: #657956; }
+.pdf-upload-summary a { margin-left: auto; }
+.pdf-upload-preview { max-height: 320px; overflow: auto; }
+.pdf-upload-preview .pdf-pages { padding: 0; }
+.pdf-upload-preview .pdf-page-text { max-height: 130px; }
+.pdf-source-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.pdf-source-links a { font-size: 11px; padding: 6px 9px; border-radius: 5px; background: #eef5e7; color: #4e7542; }
+.source-excerpt { margin: 13px 0 0; padding: 11px 14px; border-left: 3px solid #bed69c; background: #f6f9f1; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 180px; overflow: auto; line-height: 1.8; }
+.pdf-warning { margin-bottom: 17px; }
+.search-mode { align-items: flex-start; margin: 18px 0 0; color: #52654b; }
+.search-mode small { display: block; margin-top: 4px; color: #84917c; font-size: 10px; }
+.search-timing { display: block; margin-top: 7px; font-size: 11px; color: #507b3b; }
+.index-note { margin: 8px 0 12px; color: #56764b; font-size: 11px; line-height: 1.6; }
+.form-feedback { white-space: pre-line; overflow-wrap: anywhere; }
+.search-error p { white-space: pre-line; overflow-wrap: anywhere; }
+@media(max-width:760px) { .pdf-page { padding: 15px; } .pdf-pages { padding: 0 12px 12px; } .table-toolbar { gap: 8px; } .table-toolbar .button { flex: 1; } }

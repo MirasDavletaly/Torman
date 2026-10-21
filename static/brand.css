@@ -1,0 +1,44 @@
+/* One wordmark throughout the app. SVG paths keep its lettering consistent. */
+.brand {
+  padding: 0 13px;
+  gap: 0;
+  width: fit-content;
+  flex-shrink: 0;
+  border-radius: 9px;
+  line-height: 1;
+}
+
+.brand-logo {
+  display: block;
+  width: 168px;
+  height: 42px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.footer-brand img {
+  display: block;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1200px) and (min-width: 761px) {
+  .brand-logo { width: 156px; height: 39px; }
+}
+
+@media (max-width: 760px) {
+  .brand { padding: 0; }
+  .brand-logo { width: 140px; height: 35px; }
+  .footer-brand { gap: 6px; }
+  .footer-brand img { width: 16px; height: 16px; }
+}
+
+@media (max-width: 380px) {
+  .sidebar { gap: 12px; }
+  .brand-logo { width: 128px; height: 32px; }
+}

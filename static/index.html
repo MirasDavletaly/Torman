@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#163d31">
+  <title>Torman — подбор товаров</title>
+  <link rel="icon" href="/assets/brand/torman.ico" sizes="16x16 24x24 32x32 48x48 64x64 128x128 256x256">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" sizes="any">
+  <link rel="apple-touch-icon" href="/assets/brand/apple-touch-icon.png">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/brand.css">
+  <link rel="stylesheet" href="/assets/pdf.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="Torman, главная"><img class="brand-logo" src="/assets/brand/logo-light.svg" width="168" height="42" alt="Torman" fetchpriority="high"></a>
+    <div class="workspace-label">ВАШ РАБОЧИЙ КАТАЛОГ</div>
+    <nav aria-label="Главное меню">
+      <button class="nav-item active" data-view="search"><span data-icon="sparkles"></span>Подбор товаров</button>
+      <button class="nav-item" data-view="catalog"><span data-icon="grid"></span>Мой каталог<span id="nav-count" class="nav-count">0</span></button>
+      <button class="nav-item" data-view="history"><span data-icon="clock"></span>История подборов</button>
+    </nav>
+    <div class="sidebar-note"><span data-icon="database"></span><strong>Ваш каталог под рукой</strong><p>Загрузите PDF один раз.<br>Товары останутся здесь<br>при следующем запуске.</p></div>
+    <div class="sidebar-bottom"><button class="nav-item" data-action="settings"><span data-icon="settings"></span>Настройки Gemini</button><div class="local-label"><span class="status-dot"></span>На вашем компьютере <span>v1.2.2</span></div></div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar"><div class="breadcrumb">Рабочее пространство <span>/</span> <strong id="breadcrumb-title">Подбор товаров</strong></div><button id="connection-badge" class="connection-badge" data-action="settings"><span class="status-dot"></span><span>Подключить Gemini</span><span data-icon="chevron"></span></button></header>
+    <main>
+      <section id="view-search" class="view">
+        <div class="page-heading"><div><div class="eyebrow">ИЗ КАТАЛОГА — К НУЖНОМУ ТОВАРУ</div><h1>Что будем искать?</h1><p>Опишите характеристики — Gemini подберёт варианты из вашего PDF.</p></div><span class="powered"><span data-icon="sparkles"></span>Работает с Gemini</span></div>
+        <div class="search-layout">
+          <section class="query-panel panel">
+            <div class="section-heading"><span class="icon-tile" data-icon="sliders"></span><div><h2>Ваши требования</h2><p>Можно написать обычными словами</p></div></div>
+            <form id="search-form">
+              <label class="sr-only" for="query">Характеристики нужного товара</label>
+              <textarea id="query" maxlength="3000" placeholder="Например: нужен товар из нержавеющей стали, диаметром 50 мм, до 30 000 ₸. Покажи варианты в наличии." rows="5"></textarea>
+              <div class="query-bottom"><span>Укажите размеры, материал, цену или другие параметры.</span><span id="query-count">0 / 3000</span></div>
+              <div class="query-suggestions"><span>Добавить условие</span><button type="button" data-example="Только товары в наличии.">В наличии <span>+</span></button><button type="button" data-example="Сначала самые недорогие подходящие варианты.">Сначала дешевле <span>+</span></button></div>
+              <label class="checkbox-label search-mode"><input id="direct-search" type="checkbox"><span>Проверить по исходному PDF <small>Медленнее · перечитать документ без кеша</small></span></label>
+              <div class="query-action"><span class="privacy-note"><span data-icon="shield"></span>PDF при подготовке, характеристики<br>и новые запросы передаются в Gemini.</span><button id="search-button" type="submit" class="button primary"><span data-icon="sparkles"></span>Подобрать товары<span data-icon="arrow"></span></button></div>
+            </form>
+          </section>
+          <section id="catalog-card" class="catalog-card panel"></section>
+        </div>
+        <div id="search-progress" class="progress-panel hidden" role="status" aria-live="polite"><span class="spinner"></span><div><strong id="progress-title">Подбираем товары</strong><p id="progress-detail">Подготовка каталога…</p><progress id="progress-bar" max="1" value="0"></progress></div><button class="button subtle" data-action="cancel-search">Остановить</button></div>
+        <section id="results" aria-live="polite"></section>
+      </section>
+      <section id="view-catalog" class="view hidden"><div class="page-heading"><div><div class="eyebrow">ВАШ PDF ВСЕГДА ПОД РУКОЙ</div><h1>Мой каталог</h1><p id="catalog-description">Страницы вашего PDF-каталога.</p></div><button class="button primary" data-action="upload"><span data-icon="upload"></span>Загрузить PDF</button></div><div class="panel catalog-panel"><div class="table-toolbar"><div class="filter-input"><span data-icon="search"></span><input id="catalog-filter" placeholder="Поиск по доступному тексту PDF" aria-label="Поиск в каталоге"></div><a class="button subtle hidden" id="pdf-open" target="_blank" rel="noopener noreferrer">Открыть PDF ↗</a><a class="button subtle" id="original-download" href="/api/catalog/original"><span data-icon="download"></span>Исходный файл</a></div><p id="catalog-notes" class="catalog-notes"></p><div id="catalog-table" class="table-scroll"></div><div class="pagination"><span id="page-description"></span><div><button class="button subtle" id="page-prev" aria-label="Предыдущая страница">←</button><button class="button subtle" id="page-next" aria-label="Следующая страница">→</button></div></div></div></section>
+      <section id="view-history" class="view hidden"><div class="page-heading"><div><div class="eyebrow">МОЖНО ВЕРНУТЬСЯ В ЛЮБОЙ МОМЕНТ</div><h1>История подборов</h1><p>Последние 20 запросов и результаты на момент поиска.</p></div></div><div id="history-list"></div></section>
+      <footer><span class="footer-brand"><img src="/assets/brand/mark.svg" width="20" height="20" alt="">Torman · Умный подбор из вашего каталога</span><span><span class="status-dot"></span>Каталог сохраняется на диске</span></footer>
+    </main>
+  </div>
+  <input id="file-input" type="file" accept=".pdf,application/pdf" hidden>
+  <dialog id="upload-dialog" aria-labelledby="upload-title"><div class="modal-header"><div><div class="eyebrow">НОВЫЙ КАТАЛОГ</div><h2 id="upload-title">Загрузить PDF</h2></div><button class="icon-button" data-close="upload-dialog" aria-label="Закрыть">×</button></div><div id="upload-content"></div></dialog>
+  <dialog id="settings-dialog" aria-labelledby="settings-title"><div class="modal-header"><div><div class="eyebrow">ПОДКЛЮЧЕНИЕ</div><h2 id="settings-title">Настройки Gemini</h2></div><button class="icon-button" data-close="settings-dialog" aria-label="Закрыть">×</button></div><form id="settings-form"><p class="modal-intro">Добавьте свой API-ключ, чтобы подбирать товары по характеристикам. Он используется только для обращений к Gemini.</p><label for="api-key">API-ключ Gemini</label><input id="api-key" type="password" autocomplete="new-password" spellcheck="false" placeholder="Вставьте API-ключ"><p class="field-help" id="key-help"></p><label for="model">Модель</label><input id="model" value="gemini-3.8-flash" list="models" autocomplete="off" spellcheck="false"><datalist id="models"><option value="gemini-3.8-flash"><option value="gemini-3.5-flash-lite"><option value="gemini-2.5-flash"></datalist><label class="checkbox-label"><input id="remember-key" type="checkbox" checked>Запомнить ключ на этом компьютере</label><p class="field-help">Сохранённый ключ защищён учётной записью Windows. Каталог доступен и без ключа; для новых запросов нужен интернет.</p><div class="info-box">Создайте ключ в <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">Google AI Studio ↗</a>. Доступность и стоимость запросов зависят от вашего аккаунта Google.</div><div id="settings-feedback" class="form-feedback" role="status"></div><div class="modal-actions"><button type="button" class="button subtle" id="test-connection">Проверить подключение</button><button type="submit" class="button primary" id="save-settings">Сохранить</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast hidden"></div>
+</body>
+</html>
